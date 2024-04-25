@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="Email_Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <payloadFactory media-type="json">
+        <format>{"from":"vamsi2634@gmail.com","to":"$1","subject":"WSO2 ACCOUNT CREATION STATUS","content":"Welcome to WSO2 Bank MR/MRS $2,your account created successfully...!Your Account Number : $3,IFSC : $4 , Branch : $5 ,Customer ID : $6, Password : $7 "}</format>
+        <args>
+            <arg evaluator="json" expression="$ctx:MAIL_ID"/>
+            <arg evaluator="json" expression="$ctx:FULL_NAME"/>
+            <arg evaluator="json" expression="$ctx:ACCOUNT_NUMBER"/>
+            <arg evaluator="json" expression="$ctx:IFSC"/>
+            <arg evaluator="json" expression="$ctx:BRANCH"/>
+            <arg evaluator="json" expression="$ctx:CUSTOMER_ID"/>
+            <arg evaluator="json" expression="$ctx:PASSWORD"/>
+        </args>
+    </payloadFactory>
+    <email.send configKey="smtpsconnection">
+        <from>{json-eval($.from)}</from>
+        <to>{json-eval($.to)}</to>
+        <subject>{json-eval($.subject)}</subject>
+        <content>{json-eval($.content)}</content>
+    </email.send>
+</sequence>

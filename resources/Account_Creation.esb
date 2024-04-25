@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
+  <server type="PROXY">
+    <children xsi:type="esb:ProxyService" name="Account_Creation" transports="http,https">
+      <outputConnector>
+        <outgoingLink target="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@inputConnector"/>
+      </outputConnector>
+      <inputConnector/>
+      <faultInputConnector/>
+      <outSequenceOutputConnector/>
+      <container>
+        <sequenceAndEndpointContainer>
+          <mediatorFlow>
+            <children xsi:type="esb:LogMediator" logLevel="CUSTOM" logSeparator=", ">
+              <inputConnector incomingLinks="//@server/@children.0/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@inputConnector"/>
+              </outputConnector>
+              <properties propertyName="REQUEST_MESSAGE" propertyValueType="EXPRESSION" propertyValue="">
+                <propertyExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </properties>
+            </children>
+            <children xsi:type="esb:PropertyGroupMediator">
+              <inputConnector incomingLinks="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.2/@inputConnector"/>
+              </outputConnector>
+              <properties valueType="EXPRESSION" newPropertyName="FIRST_NAME">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.FIRST_NAME)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="LAST_NAME">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.LAST_NAME)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="DOB">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.DOB)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="GENDER">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.GENDER)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="PHONE_NO">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.PHONE_NO)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="MAIL_ID">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.MAIL_ID)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="PAN_NO">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.PAN_NO)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="ADHAR_NO">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.ADHAR_NO)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="ADDRESS">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.ADDRESS)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+            </children>
+            <children xsi:type="esb:DBLookupMediator" connectionDbType="MYSQL" connectionDbDriver="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test" connectionUsername="root" connectionPassword="root">
+              <sqlStatements queryString="SELECT PAN_NO FROM HDFC_USERS WHERE PAN_NO = ?;">
+                <parameters dataType="VARCHAR" valueLiteral="default">
+                  <valueExpression propertyValue="$ctx:PAN_NO" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </parameters>
+                <results propertyName="DBPAN_NO" columnId="PAN_NO"/>
+              </sqlStatements>
+              <inputConnector incomingLinks="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.3/@inputConnector"/>
+              </outputConnector>
+            </children>
+            <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="DBPanNo">
+              <inputConnector incomingLinks="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.4/@inputConnector"/>
+              </outputConnector>
+              <valueExpression propertyValue="get-property('DBPAN_NO')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+            </children>
+            <children xsi:type="esb:FilterMediator" conditionType="XPath">
+              <inputConnector incomingLinks="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+              <outputConnector/>
+              <passOutputConnector>
+                <outgoingLink target="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.4/@filterContainer/@passContainer/@mediatorFlow/@children.0/@inputConnector"/>
+              </passOutputConnector>
+              <failOutputConnector/>
+              <xpath propertyName="filterSourceXpath" propertyValue="get-property('PAN_NO')=get-property('DBPanNo')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              <source prettyName="Filter Source" propertyName="source" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              <filterContainer>
+                <passContainer>
+                  <mediatorFlow>
+                    <children xsi:type="esb:PayloadFactoryMediator" payload="{&quot;Result&quot;:&quot;User Already Exist&quot;}" mediaType="json">
+                      <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                      <inputConnector incomingLinks="//@server/@children.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.4/@passOutputConnector/@outgoingLink"/>
+                      <outputConnector/>
+                    </children>
+                  </mediatorFlow>
+                </passContainer>
+                <failContainer>
+                  <mediatorFlow/>
+                </failContainer>
+              </filterContainer>
+            </children>
+          </mediatorFlow>
+        </sequenceAndEndpointContainer>
+        <faultContainer>
+          <mediatorFlow/>
+        </faultContainer>
+      </container>
+      <inSequenceKey prettyName="In Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      <inSequenceOnError prettyName="In Sequence On Error Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+      <outSequenceKey prettyName="Out Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      <outSequenceOnError prettyName="Out Sequence On Error Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+      <faultSequenceKey prettyName="Fault Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      <faultSequenceOnError prettyName="Fault Sequence On Error Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+      <endpointKey prettyName="Endpoint Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      <wsdlKey prettyName="WSDL Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A657870000000017704000000017400146170706C69636174696F6E2F7773646C2B786D6C7878"/>
+      <wsdlEndpoint prettyName="WSDL Endpoint" keyName="endpoint" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A657870000000017704000000017400146170706C69636174696F6E2F7773646C2B786D6C7878"/>
+      <OnError prettyName="On Error Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+    </children>
+  </server>
+</esb:EsbDiagram>

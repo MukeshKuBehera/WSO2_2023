@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmi:id="_s8vSYBTLEe6_Bc0Ot7YkdA" type="Esb" name="DataService_Proxy" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_s9wmEBTLEe6_Bc0Ot7YkdA" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_s9wmFRTLEe6_Bc0Ot7YkdA" type="7001">
+      <children xmi:type="notation:Node" xmi:id="_tFXC4BTLEe6_Bc0Ot7YkdA" type="3001">
+        <children xmi:type="notation:DecorationNode" xmi:id="_tFXC5RTLEe6_Bc0Ot7YkdA" type="5003"/>
+        <styles xmi:type="notation:DescriptionStyle" xmi:id="_tFXC4RTLEe6_Bc0Ot7YkdA"/>
+        <styles xmi:type="notation:FontStyle" xmi:id="_tFXC4hTLEe6_Bc0Ot7YkdA" fontName="Segoe UI"/>
+        <styles xmi:type="notation:LineStyle" xmi:id="_tFXC4xTLEe6_Bc0Ot7YkdA"/>
+        <element xmi:type="esb:ProxyService" href="DataService_Proxy.esb#//@server/@children.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tFXC5BTLEe6_Bc0Ot7YkdA" width="300" height="400"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_s9wmERTLEe6_Bc0Ot7YkdA"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_s9wmEhTLEe6_Bc0Ot7YkdA" fontName="Segoe UI"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_s9wmExTLEe6_Bc0Ot7YkdA"/>
+    <element xmi:type="esb:EsbServer" href="DataService_Proxy.esb#//@server"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_s9wmFBTLEe6_Bc0Ot7YkdA"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_s8vSYRTLEe6_Bc0Ot7YkdA"/>
+  <element xmi:type="esb:EsbDiagram" href="DataService_Proxy.esb#/"/>
+</notation:Diagram>

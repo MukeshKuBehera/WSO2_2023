@@ -1,0 +1,11 @@
+---
+key: "Json_to_Soap-1.0.0"
+name : "Json_to_Soap"
+displayName : "Json_to_Soap"
+description: "Sample API"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/json_to_soap"
+definitionType: "OAS3"
+securityType: "BASIC"
+mutualSSLEnabled: false
+apiId : "null"

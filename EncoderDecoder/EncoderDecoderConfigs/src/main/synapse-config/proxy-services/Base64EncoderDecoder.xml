@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="Base64EncoderDecoder" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property name="Log" value="Encoding_Log"/>
+            </log>
+            <property expression="json-eval($)" name="messagebody" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('messagebody')" name="Log"/>
+            </log>
+            <!-- <property expression="base64Encode(get-property('messageBody'))" 
+				name="FinalEncodedResponse" scope="default" type="STRING"/> -->
+            <script language="js"><![CDATA[var log = mc.getServiceLog();
+            var requestData = mc.getProperty("messagebody");
+            var encodedPayload = java.util.Base64.getEncoder().encodeToString(new java.lang.String(requestData).getBytes());
+            log.info(encodedPayload);
+            mc.setProperty('EncodeValue',encodedPayload);]]></script>
+            <property expression="get-property('EncodeValue')" name="Encodedata" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('Encodedata')" name="ReadPropertyEncoded"/>
+            </log>
+            <script language="js"><![CDATA[var log = mc.getServiceLog();
+            var encodedData = mc.getProperty("Encodedata");
+            var decodedPayload = new java.lang.String(java.util.Base64.getDecoder().decode(encodedData));
+            log.info(decodedPayload);
+            mc.setProperty('DecodeValue',decodedPayload);]]></script>
+            <property expression="get-property('DecodeValue')" name="Decodedata" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('Decodedata')" name="ReadPropertyDecoded"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{&#xd;
+ "EncodedValue":"$1",&#xd;
+"DecodedValue":"$2"&#xd;
+}</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('Encodedata')"/>
+                    <arg evaluator="xml" expression="get-property('Decodedata')"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <log level="custom">
+                <property expression="get-property('ERROR_CODE')" name="ERROR_CODE"/>
+                <property expression="get-property('ERROR_MESSAGE')" name="ERROR_MESSAGE"/>
+            </log>
+        </faultSequence>
+    </target>
+</proxy>

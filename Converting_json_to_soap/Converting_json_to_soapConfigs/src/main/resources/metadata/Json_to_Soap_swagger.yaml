@@ -1,0 +1,21 @@
+openapi: 3.0.1
+info:
+  title: Json_to_Soap
+  description: API Definition of Json_to_Soap
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/json_to_soap
+paths:
+  /:
+    get:
+      responses:
+        default:
+          description: Default response
+    put:
+      responses:
+        default:
+          description: Default response
+    post:
+      responses:
+        default:
+          description: Default response

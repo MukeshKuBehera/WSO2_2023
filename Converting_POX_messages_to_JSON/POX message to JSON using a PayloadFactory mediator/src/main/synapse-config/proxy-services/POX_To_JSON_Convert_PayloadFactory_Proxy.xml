@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="POX_To_JSON_Convert_PayloadFactory_Proxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <payloadFactory media-type="json">
+                <format> {&#xd;
+        "name": "$1",&#xd;
+        "location": {&#xd;
+            "region": "$2",&#xd;
+            "latitude": $3,&#xd;
+            "longitude": $4&#xd;
+        },&#xd;
+        "attempted_launches": $5,&#xd;
+        "successful_launches": $6,&#xd;
+        "wikipedia": "$7",&#xd;
+        "site_name_long": "$8"&#xd;
+        }</format>
+                <args>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Short_Name"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Region"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Latitude"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Longitude"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Launches/Attempts"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Launches/Successful"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/WIKI_Link"/>
+                    <arg evaluator="xml" expression="//SpaceX_LaunchPads/Station/Name"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

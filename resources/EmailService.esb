@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
+  <server type="API">
+    <children xsi:type="esb:SynapseAPI" apiName="EmailService" context="/email">
+      <resources urlStyle="URI_TEMPLATE" uriTemplate="/send" allowPost="true">
+        <inputConnector/>
+        <outputConnector>
+          <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@inputConnector"/>
+        </outputConnector>
+        <outSequenceOutputConnector/>
+        <faultInputConnector/>
+        <container>
+          <sequenceAndEndpointContainer>
+            <mediatorFlow>
+              <children xsi:type="esb:PropertyGroupMediator">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@inputConnector"/>
+                </outputConnector>
+                <properties valueType="EXPRESSION" newPropertyName="from">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.from)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+                <properties valueType="EXPRESSION" newPropertyName="to">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.to)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+                <properties valueType="EXPRESSION" newPropertyName="subject">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.subject)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+                <properties valueType="EXPRESSION" newPropertyName="content">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.content)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+                <properties valueType="EXPRESSION" newPropertyName="contentType">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.contentType)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+                <properties valueType="EXPRESSION" newPropertyName="attachmentFile">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.attachment)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+                <properties valueType="EXPRESSION" newPropertyName="attachment_0">
+                  <inputConnector/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="//attachment_0" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </properties>
+              </children>
+              <children xsi:type="esb:LogMediator" logLevel="FULL" logSeparator=", ">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.2/@inputConnector"/>
+                </outputConnector>
+                <properties propertyName="Extracted File Content" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('attachment_0')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+              </children>
+              <children xsi:type="esb:LogMediator" logLevel="CUSTOM" logSeparator=", ">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.3/@inputConnector"/>
+                </outputConnector>
+                <properties propertyName="Extracted File Content" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('attachment_0')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+                <properties propertyName="Request_Payload" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+                <properties propertyName="AttachFileName" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('attachmentFile')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+              </children>
+              <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="EMAIL_ATTACHMENT">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.4/@inputConnector"/>
+                </outputConnector>
+                <valueExpression propertyValue="get-property('attachment_0')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </children>
+              <children xsi:type="esb:EnrichMediator" sourceProperty="attachment_0" targetAction="child" targetType="body">
+                <sourceXpath prettyName="Source XPath" propertyName="xpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                <targetXpath prettyName="Target XPath" propertyName="xpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                <inlineRegistryKey prettyName="InlineKey" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.5/@inputConnector"/>
+                </outputConnector>
+              </children>
+              <children xsi:type="esb:PropertyMediator" propertyName="messageType" propertyScope="axis2" value="multipart/mixed">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.6/@inputConnector"/>
+                </outputConnector>
+                <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </children>
+              <children xsi:type="esb:PropertyMediator" propertyName="ContentType" propertyScope="axis2" value="multipart/mixed">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.7/@inputConnector"/>
+                </outputConnector>
+                <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </children>
+              <children xsi:type="esb:PropertyMediator" propertyScope="axis2" value="application/octet-stream" newPropertyName="AttachmentMediaType">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.6/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.8/@inputConnector"/>
+                </outputConnector>
+                <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </children>
+              <children xsi:type="esb:CloudConnectorOperation" description="send" configRef="smtpsconnection" connectorName="email" operationName="send" cloudConnectorName="email">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.7/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.9/@inputConnector"/>
+                </outputConnector>
+                <connectorParameters parameterName="from" templateParameterType="Expression" parameterValue="json-eval($.from)">
+                  <parameterExpression propertyValue="json-eval($.from)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="to" templateParameterType="Expression" parameterValue="json-eval($.to)">
+                  <parameterExpression propertyValue="json-eval($.to)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="cc" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="bcc" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="replyTo" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="subject" templateParameterType="Expression" parameterValue="json-eval($.subject)">
+                  <parameterExpression propertyValue="json-eval($.subject)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="content" templateParameterType="Expression" parameterValue="json-eval($.content)">
+                  <parameterExpression propertyValue="json-eval($.content)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="contentType" templateParameterType="Expression" parameterValue="json-eval($.contentType)">
+                  <parameterExpression propertyValue="json-eval($.contentType)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="encoding" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="attachments" templateParameterType="Expression" parameterValue="json-eval($.EMAIL_ATTACHMENT)">
+                  <parameterExpression propertyValue="json-eval($.EMAIL_ATTACHMENT)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="contentTransferEncoding" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <newConfig prettyName="Sequence Key" keyName="Sequence Key" keyValue="Create New Configuration" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </children>
+              <children xsi:type="esb:RespondMediator">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.0/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.8/@outputConnector/@outgoingLink"/>
+                <outputConnector/>
+              </children>
+            </mediatorFlow>
+          </sequenceAndEndpointContainer>
+          <faultContainer>
+            <mediatorFlow/>
+          </faultContainer>
+        </container>
+        <inSequenceKey prettyName="In Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        <outSequenceKey prettyName="Out Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        <faultSequenceKey prettyName="Fault Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      </resources>
+      <resources urlStyle="URI_TEMPLATE" uriTemplate="/retrieve" allowPost="true">
+        <inputConnector/>
+        <outputConnector>
+          <outgoingLink target="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@inputConnector"/>
+        </outputConnector>
+        <outSequenceOutputConnector/>
+        <faultInputConnector incomingLinks="//@server/@children.0/@resources.1/@container/@faultContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+        <container>
+          <sequenceAndEndpointContainer>
+            <mediatorFlow>
+              <children xsi:type="esb:CloudConnectorOperation" description="list" configRef="imapsconnection" connectorName="email" operationName="list" cloudConnectorName="email">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.1/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@inputConnector"/>
+                </outputConnector>
+                <connectorParameters parameterName="deleteAfterRetrieve" parameterValue="false">
+                  <parameterExpression propertyValue="false" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="receivedSince" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="receivedUntil" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="sentSince" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="sentUntil" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="subjectRegex" templateParameterType="Expression" parameterValue="json-eval($.subjectRegex)">
+                  <parameterExpression propertyValue="json-eval($.subjectRegex)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="fromRegex" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="seen" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="answered" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="deleted" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="recent" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="offset" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="limit" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <connectorParameters parameterName="folder" parameterValue="">
+                  <parameterExpression prettyName="parameter expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                </connectorParameters>
+                <newConfig prettyName="Sequence Key" keyName="Sequence Key" keyValue="Create New Configuration" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </children>
+              <children xsi:type="esb:ForEachMediator">
+                <forEachExpression propertyValue="//emails/email" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <target/>
+                <inputConnector incomingLinks="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.2/@inputConnector"/>
+                </outputConnector>
+                <targetOutputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@mediatorFlow/@children.0/@inputConnector"/>
+                </targetOutputConnector>
+                <mediatorFlow>
+                  <children xsi:type="esb:CloudConnectorOperation" description="getEmailBody" connectorName="email" operationName="getEmailBody" cloudConnectorName="email">
+                    <inputConnector incomingLinks="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@targetOutputConnector/@outgoingLink"/>
+                    <outputConnector>
+                      <outgoingLink target="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@mediatorFlow/@children.1/@inputConnector"/>
+                    </outputConnector>
+                    <connectorParameters parameterName="emailIndex" templateParameterType="Expression" parameterValue="//email/index/text()">
+                      <parameterExpression propertyValue="//email/index/text()" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportsDynamicXPaths="true"/>
+                    </connectorParameters>
+                    <newConfig prettyName="Sequence Key" keyName="Sequence Key" keyValue="Create New Configuration" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                  </children>
+                  <children xsi:type="esb:PayloadFactoryMediator" payload="&lt;email>&lt;emailID>$1&lt;/emailID>&lt;to>$2&lt;/to>&lt;from>$3&lt;/from>&lt;subject>$4&lt;/subject>&lt;textContent>$5&lt;/textContent>&lt;/email>">
+                    <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                    <args argumentType="Expression">
+                      <argumentExpression propertyValue="//email/emailID" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                    </args>
+                    <args argumentType="Expression">
+                      <argumentExpression propertyValue="//email/to" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                    </args>
+                    <args argumentType="Expression">
+                      <argumentExpression propertyValue="//email/from" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                    </args>
+                    <args argumentType="Expression">
+                      <argumentExpression propertyValue="//email/subject" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                    </args>
+                    <args argumentType="Expression">
+                      <argumentExpression propertyValue="$ctx:TEXT_CONTENT" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                    </args>
+                    <inputConnector incomingLinks="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+                    <outputConnector/>
+                  </children>
+                </mediatorFlow>
+                <sequenceKey prettyName="Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </children>
+              <children xsi:type="esb:PropertyMediator" propertyName="messageType" propertyScope="axis2" value="application/json">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.3/@inputConnector"/>
+                </outputConnector>
+                <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </children>
+              <children xsi:type="esb:RespondMediator">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.1/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+                <outputConnector/>
+              </children>
+            </mediatorFlow>
+          </sequenceAndEndpointContainer>
+          <faultContainer>
+            <mediatorFlow>
+              <children xsi:type="esb:LogMediator" logLevel="CUSTOM" logSeparator=", ">
+                <inputConnector/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.1/@faultInputConnector"/>
+                </outputConnector>
+                <properties propertyName="ERROR CODE" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('ERROR_CODE')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+                <properties propertyName="ERROR MESSAGE" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('ERROR_MESSAGE')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+              </children>
+            </mediatorFlow>
+          </faultContainer>
+        </container>
+        <inSequenceKey prettyName="In Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        <outSequenceKey prettyName="Out Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        <faultSequenceKey prettyName="Fault Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      </resources>
+    </children>
+  </server>
+</esb:EsbDiagram>

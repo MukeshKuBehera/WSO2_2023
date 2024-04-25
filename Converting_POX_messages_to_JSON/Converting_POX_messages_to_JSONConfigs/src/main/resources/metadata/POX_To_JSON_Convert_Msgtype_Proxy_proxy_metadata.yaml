@@ -1,0 +1,10 @@
+---
+key: "POX_To_JSON_Convert_Msgtype_Proxy_proxy-1.0.0"
+name : "POX_To_JSON_Convert_Msgtype_Proxy"
+displayName : "POX_To_JSON_Convert_Msgtype_Proxy"
+description: "Sample Proxy Service"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/services/POX_To_JSON_Convert_Msgtype_Proxy"
+definitionType: "WSDL1"
+securityType: "BASIC"
+mutualSSLEnabled: false

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/rest_data_service" name="RestDataService_API" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/add">
+        <inSequence>
+            <propertyGroup>
+                <property expression="json-eval($.name)" name="name" scope="default" type="STRING"/>
+                <property expression="json-eval($.school)" name="school" scope="default" type="STRING"/>
+                <property expression="json-eval($.grade)" name="grade" scope="default" type="STRING"/>
+            </propertyGroup>
+            <log>
+                <property name="Before_Endpoint" value="Before_Endpoint"/>
+                <property expression="get-property('name')" name="Name"/>
+                <property expression="get-property('school')" name="School"/>
+                <property expression="get-property('grade')" name="Grade"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{&#xd;
+    "_poststudent": {&#xd;
+        "name": "$1",&#xd;
+        "school": "$2",&#xd;
+        "grade": "$3"&#xd;
+    }&#xd;
+}</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('name')"/>
+                    <arg evaluator="xml" expression="get-property('school')"/>
+                    <arg evaluator="xml" expression="get-property('grade')"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="Insert_EP"/>
+            </call>
+            <log>
+                <property name="After_Endpoint" value="After_Endpoint"/>
+                <property expression="get-property('name')" name="Res_Name"/>
+                <property expression="get-property('school')" name="Res_School"/>
+                <property expression="get-property('grade')" name="Res_Grade"/>
+            </log>
+            <property expression="get-property('axis2','HTTP_SC')" name="DB_StatusCode" scope="default" type="STRING"/>
+            <log>
+                <property expression="get-property('DB_StatusCode')" name="DB_StatusCode_LOG"/>
+            </log>
+            <filter regex="true" source="boolean(get-property('DB_StatusCode'))=200">
+                <then>
+                    <log level="custom">
+                        <property name="+++ Inside Succes Case +++" value="+++ Inside Succes Case +++"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+							{&#xd;
+							"Message":" Data Insertion Successfully with Name : $1"}
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('name')"/>
+                        </args>
+                    </payloadFactory>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="+++ Inside Failure Case +++" value="+++ Inside Failure Case +++"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+							{&#xd;
+							"Message":" Data Insertion failure with name :  $1" }
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('name')"/>
+                        </args>
+                    </payloadFactory>
+                </else>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="PUT" uri-template="/update">
+        <inSequence>
+            <propertyGroup>
+                <property expression="json-eval($.id)" name="id" scope="default" type="INTEGER"/>
+                <property expression="json-eval($.name)" name="name" scope="default" type="STRING"/>
+                <property expression="json-eval($.school)" name="school" scope="default" type="STRING"/>
+                <property expression="json-eval($.grade)" name="grade" scope="default" type="STRING"/>
+            </propertyGroup>
+            <log>
+                <property name="Before_Endpoint" value="Before_Endpoint"/>
+                <property expression="get-property('id')" name="Id"/>
+                <property expression="get-property('name')" name="Name"/>
+                <property expression="get-property('school')" name="School"/>
+                <property expression="get-property('grade')" name="Grade"/>
+            </log>
+            <!-- First check the id is exist or not -->
+            <payloadFactory media-type="json">
+                <format>
+					{&#xd;
+					"_poststudent":{&#xd;
+					"id":$1&#xd;
+					}&#xd;
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id')"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="GetById_EP"/>
+            </call>
+            <log level="full"/>
+            <property expression="json-eval($.generatedKey.Student)" name="Database_Response" scope="default" type="STRING"/>
+            <log level="custom">
+                <property name="After_GetById_EP" value="After_GetById_EP"/>
+                <property expression="get-property('Database_Response')" name="GetbyID_Database_Response"/>
+            </log>
+            <!-- Delete operation -->
+            <filter regex="true" source="boolean(get-property('Database_Response'))=null">
+                <then>
+                    <log level="custom">
+                        <property name="TRUE_AFTER_GETBYID_RESPONSE" value="TRUE_AFTER_GETBYID_RESPONSE"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>{"Message":"User Does Not Exist For Update..."}</format>
+                        <args/>
+                    </payloadFactory>
+                    <respond/>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="FALSE_AFTER_GETBYID_RESPONSE" value="FALSE_AFTER_GETBYID_RESPONSE"/>
+                    </log>
+                </else>
+            </filter>
+            <payloadFactory media-type="json">
+                <format>{&#xd;
+  "_putstudent": {&#xd;
+      "id" : $1,&#xd;
+    "name" : "$2",&#xd;
+    "school": "$3",&#xd;
+    "grade": "$4"&#xd;
+  }&#xd;
+}</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id')"/>
+                    <arg evaluator="xml" expression="get-property('name')"/>
+                    <arg evaluator="xml" expression="get-property('school')"/>
+                    <arg evaluator="xml" expression="get-property('grade')"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="Update_EP"/>
+            </call>
+            <property expression="get-property('axis2','HTTP_SC')" name="DB_StatusCode" scope="default" type="STRING"/>
+            <log>
+                <property expression="get-property('DB_StatusCode')" name="DB_StatusCode_LOG"/>
+            </log>
+            <filter regex="true" source="boolean(get-property('DB_StatusCode'))=200">
+                <then>
+                    <log level="custom">
+                        <property name="+++ Inside Succes Case +++" value="+++ Inside Succes Case +++"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+							{&#xd;
+							"Message":" Updation Successfull with ID : $1"
+							}
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('id')"/>
+                        </args>
+                    </payloadFactory>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="+++ Inside Failure Case +++" value="+++ Inside Failure Case +++"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+							{&#xd;
+							"Message":" Updation Unsuccessfull with ID : $1"
+							}
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('id')"/>
+                        </args>
+                    </payloadFactory>
+                </else>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="DELETE" uri-template="/delete">
+        <inSequence>
+            <property expression="json-eval($.id)" name="id" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('id')" name="ID"/>
+            </log>
+            <!-- First check the id is exist or not -->
+            <payloadFactory media-type="json">
+                <format>
+					{&#xd;
+					"_poststudent":{&#xd;
+					"id":$1&#xd;
+					}&#xd;
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id')"/>
+                </args>
+            </payloadFactory>
+            <call>
+                <endpoint key="GetById_EP"/>
+            </call>
+            <log level="full"/>
+            <property expression="json-eval($.generatedKey.Student)" name="Database_Response" scope="default" type="STRING"/>
+            <log level="custom">
+                <property name="After_GetById_EP" value="After_GetById_EP"/>
+                <property expression="get-property('Database_Response')" name="GetbyID_Database_Response"/>
+            </log>
+            <!-- Delete operation -->
+            <filter regex="true" source="boolean(get-property('Database_Response'))=null">
+                <then>
+                    <log level="custom">
+                        <property name="TRUE_AFTER_GETBYID_RESPONSE" value="TRUE_AFTER_GETBYID_RESPONSE"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>{"Message":"User Does Not Exist....!"}</format>
+                        <args/>
+                    </payloadFactory>
+                    <respond/>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="FALSE_AFTER_GETBYID_RESPONSE" value="FALSE_AFTER_GETBYID_RESPONSE"/>
+                    </log>
+                </else>
+            </filter>
+            <payloadFactory media-type="json">
+                <format>
+					{&#xd;
+					"_deletestudent":{&#xd;
+					"id":$1&#xd;
+					}&#xd;
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id')"/>
+                </args>
+            </payloadFactory>
+            <log>
+                <property name="Before_Endpoint" value="Before_Endpoint"/>
+                <property expression="json-eval($)" name="Inputpayload"/>
+            </log>
+            <call>
+                <endpoint key="Delete_EP"/>
+            </call>
+            <property expression="get-property('axis2','HTTP_SC')" name="DB_StatusCode" scope="default" type="STRING"/>
+            <log>
+                <property expression="get-property('DB_StatusCode')" name="DB_StatusCode_LOG"/>
+            </log>
+            <filter regex="true" source="boolean(get-property('DB_StatusCode'))=202">
+                <then>
+                    <log level="custom">
+                        <property name="+++ Inside Succes Case +++" value="+++ Inside Succes Case +++"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+							{&#xd;
+							"Message":" Deletion Succesfull with ID : $1"
+							}
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('id')"/>
+                        </args>
+                    </payloadFactory>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="+++ Inside Failure Case +++" value="+++ Inside Failure Case +++"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+							{&#xd;
+							"Message":" Deletion Unsuccessfull with ID : $1"
+							}
+						</format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('id')"/>
+                        </args>
+                    </payloadFactory>
+                </else>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/getbyid">
+        <inSequence>
+            <property expression="json-eval($.id)" name="id" scope="default" type="STRING"/>
+            <log>
+                <property expression="get-property('id')" name="Request_ID"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>
+					{&#xd;
+					"_poststudent":{&#xd;
+					"id":$1&#xd;
+					}&#xd;
+					}
+				</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('id')"/>
+                </args>
+            </payloadFactory>
+            <log>
+                <property name="Before_Endpoint" value="Before_Endpoint"/>
+                <property expression="json-eval($)" name="Inputpayload"/>
+            </log>
+            <call>
+                <endpoint key="GetById_EP"/>
+            </call>
+            <log>
+                <property name="After_Endpoint" value="After_Endpoint"/>
+                <property expression="json-eval($)" name="Responsepayload"/>
+            </log>
+            <!-- Checking user exist or not -->
+            <log level="full"/>
+            <property expression="json-eval($.generatedKey.Student)" name="Database_Response" scope="default" type="STRING"/>
+            <log level="custom">
+                <property name="After_GetById_EP" value="After_GetById_EP"/>
+                <property expression="get-property('Database_Response')" name="GetbyID_Database_Response"/>
+            </log>
+            <!-- Get Operation -->
+            <filter regex="true" source="boolean(get-property('Database_Response'))=null">
+                <then>
+                    <log level="custom">
+                        <property name="TRUE_AFTER_GETBYID_RESPONSE" value="TRUE_AFTER_GETBYID_RESPONSE"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>{"Message":"User Does Not Exist....!"}</format>
+                        <args/>
+                    </payloadFactory>
+                    <respond/>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="FALSE_AFTER_GETBYID_RESPONSE" value="FALSE_AFTER_GETBYID_RESPONSE"/>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format> {&#xd;
+        "Student": "$1",&#xd;
+        "name":"$2",
+        "school":"$3",
+        "grade":"$4"
+          &#xd;
+        &#xd;
+    }&#xd;
+</format>
+                        <args>
+                            <arg evaluator="json" expression="$ctx:Database_Response"/>
+                            <arg evaluator="json" expression="$ctx:Database_Response.name"/>
+                            <arg evaluator="json" expression="$ctx:generatedKey.Student.school"/>
+                            <arg evaluator="json" expression="$ctx:generatedKey.Student.grade"/>
+                        </args>
+                    </payloadFactory>
+                </else>
+            </filter>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/getalldata">
+        <inSequence>
+            <call>
+                <endpoint key="GetAllData"/>
+            </call>
+            <log>
+                <property name="After_Endpoint" value="After_Endpoint"/>
+                <property expression="json-eval($)" name="Responsepayload"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

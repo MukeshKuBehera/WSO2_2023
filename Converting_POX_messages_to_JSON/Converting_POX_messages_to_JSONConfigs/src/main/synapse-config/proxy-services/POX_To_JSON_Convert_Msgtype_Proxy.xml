@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="POX_To_JSON_Convert_Msgtype_Proxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

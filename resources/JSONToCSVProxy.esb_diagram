@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmi:id="_NCDMkBQJEe6xW8sH1lQGVA" type="Esb" name="JSONToCSVProxy" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_PBD28BQJEe6xW8sH1lQGVA" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_PBhJ8BQJEe6xW8sH1lQGVA" type="7001">
+      <children xmi:type="notation:Node" xmi:id="_P08yABQJEe6xW8sH1lQGVA" type="3001">
+        <children xmi:type="notation:DecorationNode" xmi:id="_P08yBRQJEe6xW8sH1lQGVA" type="5003"/>
+        <styles xmi:type="notation:DescriptionStyle" xmi:id="_P08yARQJEe6xW8sH1lQGVA"/>
+        <styles xmi:type="notation:FontStyle" xmi:id="_P08yAhQJEe6xW8sH1lQGVA" fontName="Segoe UI"/>
+        <styles xmi:type="notation:LineStyle" xmi:id="_P08yAxQJEe6xW8sH1lQGVA"/>
+        <element xmi:type="esb:ProxyService" href="JSONToCSVProxy.esb#//@server/@children.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_P08yBBQJEe6xW8sH1lQGVA" x="3075" y="94"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_PBD28RQJEe6xW8sH1lQGVA"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_PBD28hQJEe6xW8sH1lQGVA" fontName="Segoe UI"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_PBD28xQJEe6xW8sH1lQGVA"/>
+    <element xmi:type="esb:EsbServer" href="JSONToCSVProxy.esb#//@server"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_PBD29BQJEe6xW8sH1lQGVA"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_NCDMkRQJEe6xW8sH1lQGVA"/>
+  <element xmi:type="esb:EsbDiagram" href="JSONToCSVProxy.esb#/"/>
+</notation:Diagram>

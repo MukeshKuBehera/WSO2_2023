@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="FileProxy" startOnLoad="true" transports="http https vfs" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <!--  <property expression="//test/information/people" name="ReadRequest" scope="default" type="STRING"/> -->
+            <payloadFactory media-type="text" template-type="freemarker">
+                <format><![CDATA[Name,Age,Company
+<#list payload.test.information.people.person as person>
+${person.name},${person.age},${person.company}
+</#list>]]></format>
+                <args/>
+            </payloadFactory>
+            <enrich>
+                <source clone="true" type="body"/>
+                <target property="Content" type="property"/>
+            </enrich>
+            <property name="messageType" scope="axis2" type="STRING" value="application/text"/>
+            <property name="ContentType" scope="axis2" type="STRING" value="application/text"/>
+            <property expression="get-property('Content')" name="ReadRequest" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('ReadRequest')" name="CSV_DATA"/>
+            </log>
+            <class name="com.test.DataInserting"/>
+            <log level="custom">
+                <property expression="get-property('JavaCsvData')" name="JAVA_CSV_DATA"/>
+                <property expression="get-property('JavaStringData')" name="JAVA_STRING_DATA"/>
+                <property expression="get-property('DataWithoutHeader')" name="WithoutHeaders"/>
+                <property expression="get-property('FileExitMessage')" name="FileExistProperty"/>
+                <property expression="get-property('FileNotExistMessage')" name="FileNotExistProperty"/>
+                <property expression="get-property('DataSucess')" name="DataAppendSucessProperty"/>
+                <property expression="get-property('DataFail')" name="DataAppendFailueProperty"/>
+            </log>
+            <log level="custom" separator=",">
+                <property expression="get-property('ReadRequest')" name="ReadProperty"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

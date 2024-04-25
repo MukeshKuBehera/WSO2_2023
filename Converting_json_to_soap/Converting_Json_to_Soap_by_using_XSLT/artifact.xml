@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="in_transform" groupId="com.example.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/in_transform.xml</file>
+    </artifact>
+    <artifact name="Convert_Json_To_Soap_Using_XSLT" groupId="com.example.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/Convert_Json_To_Soap_Using_XSLT.xml</file>
+    </artifact>
+    <artifact name="Convert_Json_To_Soap_Using_XSLT_swagger" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/Convert_Json_To_Soap_Using_XSLT_swagger.yaml</file>
+    </artifact>
+    <artifact name="Convert_Json_To_Soap_Using_XSLT_metadata" groupId="com.example.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/Convert_Json_To_Soap_Using_XSLT_metadata.yaml</file>
+    </artifact>
+</artifacts>

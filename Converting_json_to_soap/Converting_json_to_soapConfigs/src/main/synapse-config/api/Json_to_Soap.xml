@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/json_to_soap" name="Json_to_Soap" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST PUT GET">
+        <inSequence>
+            <payloadFactory media-type="xml">
+                <format>
+                    <soapenv:Envelope xmlns:ns="http://www.viewstar.com/webservices/2002/11" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+                        <soapenv:Header/>
+                        <soapenv:Body>
+                            <ns:StudentData>
+                                <ns:student>
+                                    <ns:userId>$1</ns:userId>
+                                    <ns:id>$2</ns:id>
+                                    <ns:title>$3</ns:title>
+                                    <ns:body>$4</ns:body>
+                                </ns:student>
+                            </ns:StudentData>
+                        </soapenv:Body>
+                    </soapenv:Envelope>
+                </format>
+                <args>
+                    <arg evaluator="json" expression="$.StudneData.Student.userId"/>
+                    <arg evaluator="json" expression="$.StudentData.Student.id"/>
+                    <arg evaluator="json" expression="$.StudentData.Student.title"/>
+                    <arg evaluator="json" expression="$.StudentData.Student.body"/>
+                </args>
+            </payloadFactory>
+            <log level="full"/>
+            <call>
+                <endpoint>
+                    <address uri="https://jsonplaceholder.typicode.com/posts">
+                        <suspendOnFailure>
+                            <initialDuration>-1</initialDuration>
+                            <progressionFactor>-1</progressionFactor>
+                            <maximumDuration>0</maximumDuration>
+                        </suspendOnFailure>
+                        <markForSuspension>
+                            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                        </markForSuspension>
+                    </address>
+                </endpoint>
+            </call>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

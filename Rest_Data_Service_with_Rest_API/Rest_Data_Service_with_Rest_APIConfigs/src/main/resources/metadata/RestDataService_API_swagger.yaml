@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: RestDataService_API
+  description: API Definition of RestDataService_API
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/rest_data_service
+paths:
+  /add:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /update:
+    put:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /delete:
+    delete:
+      responses:
+        default:
+          description: Default response
+  /getbyid:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+        required: false
+      responses:
+        default:
+          description: Default response
+  /getalldata:
+    get:
+      responses:
+        default:
+          description: Default response

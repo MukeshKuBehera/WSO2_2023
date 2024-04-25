@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="AesEncodingDecoding" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <property expression="json-eval($)" name="RequestData" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('RequestData')" name="REQUEST_MESSAGE"/>
+            </log>
+            <class name="com.example.AesEncoderDecoder"/>
+            <propertyGroup>
+                <property expression="get-property('EncodedValue')" name="EncodedValue" scope="default" type="STRING"/>
+                <property expression="get-property('DecodedValue')" name="DecodedValue" scope="default" type="STRING"/>
+            </propertyGroup>
+            <log level="custom" separator="@@@@@@@@@@@@@@@@@@@@@@@@">
+                <property expression="get-property('EncodedValue')" name="EncodedValue"/>
+                <property expression="get-property('DecodedValue')" name="DecodedValue"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{"EncodedValue":"$1","DecodedValue":"$2"}</format>
+                <args>
+                    <arg evaluator="json" expression="$ctx:EncodedValue"/>
+                    <arg evaluator="json" expression="$ctx:DecodedValue"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

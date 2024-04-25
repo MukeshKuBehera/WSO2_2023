@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="JSONToCSVProxy" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log level="full"/>
+            <CSV.jsonToCsv>
+                <customHeader>id,first_name,last_name,email,gender,city,company,department,address</customHeader>
+            </CSV.jsonToCsv>
+            <enrich>
+                <source clone="true" type="body"/>
+                <target property="Content" type="property"/>
+            </enrich>
+            <property name="ContentType" scope="axis2" type="STRING" value="application/text"/>
+            <property expression="get-property('Content')" name="ReadRequest" scope="default" type="STRING"/>
+            <!-- <property expression="$body" name="CSV_DATA" scope="default" type="STRING"/> -->
+            <log level="custom">
+                <property expression="get-property('ReadRequest')" name="CSV_DATA"/>
+            </log>
+            <file.checkExist configKey="FILE_CONNECTION_1">
+                <path>/MKB.csv/</path>
+                <includeResultTo>Message Body</includeResultTo>
+            </file.checkExist>
+            <!-- <property name="messageType" scope="axis2" type="STRING" value="application/json"/> -->
+            <property expression="$body/checkExistResult/fileExists" name="FileExist" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('FileExist')" name="FileExists"/>
+            </log>
+            <filter regex="true" source="get-property('FileExist')">
+                <then>
+                    <log level="custom">
+                        <property name="Filter" value="TRUE"/>
+                    </log>
+                    <file.write configKey="FILE_CONNECTION_1">
+                        <filePath>/MKB.csv/</filePath>
+                        <contentOrExpression>{$ctx:ReadRequest}</contentOrExpression>
+                        <mimeType>application/xml</mimeType>
+                        <compress>false</compress>
+                        <writeMode>Overwrite</writeMode>
+                        <enableStreaming>true</enableStreaming>
+                        <appendNewLine>false</appendNewLine>
+                        <enableLock>true</enableLock>
+                        <includeResultTo>Message Body</includeResultTo>
+                        <updateLastModified>true</updateLastModified>
+                    </file.write>
+                    <payloadFactory media-type="json">
+                        <format>{"StatusCode":"OK","StatusMessage":"Success","Message":"CSV data overwritten successfully....!"}</format>
+                        <args/>
+                    </payloadFactory>
+                </then>
+                <else>
+                    <log level="custom">
+                        <property name="Filter" value="False"/>
+                    </log>
+                    <file.write configKey="FILE_CONNECTION_1">
+                        <filePath>/MKB.csv/</filePath>
+                        <contentOrExpression>{$ctx:ReadRequest}</contentOrExpression>
+                        <mimeType>Automatic</mimeType>
+                        <compress>false</compress>
+                        <writeMode>Create New</writeMode>
+                        <enableStreaming>true</enableStreaming>
+                        <appendNewLine>true</appendNewLine>
+                        <enableLock>false</enableLock>
+                        <includeResultTo>Message Body</includeResultTo>
+                        <updateLastModified>true</updateLastModified>
+                    </file.write>
+                    <payloadFactory media-type="json">
+                        <format>{"StatusCode":"OK","StatusMessage":"Success","Message":"CSV data inserted successfully....!"}</format>
+                        <args/>
+                    </payloadFactory>
+                </else>
+            </filter>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

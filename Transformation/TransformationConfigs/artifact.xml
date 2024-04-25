@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="JSON_TO_XML" groupId="com.example.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/JSON_TO_XML.xml</file>
+    </artifact>
+    <artifact name="JSON_TO_XML_proxy_metadata" groupId="com.example.proxy-service.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/JSON_TO_XML_proxy_metadata.yaml</file>
+    </artifact>
+    <artifact name="XML_TO_JSON" groupId="com.example.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/XML_TO_JSON.xml</file>
+    </artifact>
+    <artifact name="XML_TO_JSON_proxy_metadata" groupId="com.example.proxy-service.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/XML_TO_JSON_proxy_metadata.yaml</file>
+    </artifact>
+</artifacts>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="AccountCreation" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property expression="json-eval($)" name="REQUEST_MESSAGE"/>
+    </log>
+    <propertyGroup>
+        <property expression="json-eval($.FIRST_NAME)" name="FIRST_NAME" scope="default" type="STRING"/>
+        <property expression="json-eval($.LAST_NAME)" name="LAST_NAME" scope="default" type="STRING"/>
+        <property expression="json-eval($.DOB)" name="DOB" scope="default" type="STRING"/>
+        <property expression="json-eval($.GENDER)" name="GENDER" scope="default" type="STRING"/>
+        <property expression="json-eval($.PHONE_NO)" name="PHONE_NO" scope="default" type="STRING"/>
+        <property expression="json-eval($.MAIL_ID)" name="MAIL_ID" scope="default" type="STRING"/>
+        <property expression="json-eval($.PAN_NO)" name="PAN_NO" scope="default" type="STRING"/>
+        <property expression="json-eval($.ADHAR_NO)" name="ADHAR_NO" scope="default" type="STRING"/>
+        <property expression="json-eval($.ADDRESS)" name="ADDRESS" scope="default" type="STRING"/>
+    </propertyGroup>
+    <dblookup>
+        <connection>
+            <pool>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/test</url>
+                <user>root</user>
+                <password>root</password>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[SELECT PAN_NO FROM test.wso2_users WHERE PAN_NO = ?]]></sql>
+            <parameter expression="get-property('PAN_NO')" type="VARCHAR"/>
+            <result column="PAN_NO" name="DBPAN_NO"/>
+        </statement>
+    </dblookup>
+    <property expression="get-property('DBPAN_NO')" name="DBPanNo" scope="default" type="STRING"/>
+    <filter xpath="get-property('PAN_NO')=get-property('DBPanNo')">
+        <then>
+            <payloadFactory media-type="json">
+                <format>{"Result":"User Already Exist"}</format>
+                <args/>
+            </payloadFactory>
+            <log level="custom">
+                <property name="RESPONSE_MESSAGE" value="USER ALREADY EXIST"/>
+            </log>
+        </then>
+        <else>
+            <sequence key="CreateAccount"/>
+            <log level="custom">
+                <property name="AFTER_CREATE_ACCOUNT_SEQUENCE" value="AFTER_CREATE_ACCOUNT_SEQUENCE"/>
+            </log>
+        </else>
+    </filter>
+</sequence>

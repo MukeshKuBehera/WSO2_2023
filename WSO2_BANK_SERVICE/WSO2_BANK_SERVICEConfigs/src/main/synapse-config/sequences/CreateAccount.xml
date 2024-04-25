@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="CreateAccount" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <script language="js"><![CDATA[var customerId =Math.floor(Math.random() * 10000000000).toString().slice(2,10);
+    mc.setProperty("customer_id", customerId);
+ var password = Math.random().toString(36).slice(2);
+    mc.setProperty("password", password);
+    var accountNumber =Math.floor(Math.random() * 10000000000000000000000).toString().slice(2,16);
+    mc.setProperty("account_no", accountNumber);]]></script>
+    <propertyGroup>
+        <property expression="get-property('account_no')" name="ACCOUNT_NUMBER" scope="default" type="STRING"/>
+        <property expression="get-property('password')" name="PASSWORD" scope="default" type="STRING"/>
+        <property expression="get-property('customer_id')" name="CUSTOMER_ID" scope="default" type="STRING"/>
+        <property name="IFSC" scope="default" type="STRING" value="HDFC09856"/>
+        <property name="BRANCH" scope="default" type="STRING" value="HYDERABAD"/>
+        <property expression="fn:concat(get-property('FIRST_NAME'),' ',get-property('LAST_NAME'))" name="FULL_NAME" scope="default" type="STRING"/>
+    </propertyGroup>
+    <log level="custom" separator="@@@@@@@@@@@">
+        <property expression="get-property('FULL_NAME')" name="FULL_NAME"/>
+        <property expression="get-property('ACCOUNT_NUMBER')" name="ACCOUNT_NUMBER"/>
+        <property expression="get-property('PASSWORD')" name="PASSWORD"/>
+        <property expression="get-property('CUSTOMER_ID')" name="CUSTOMER_ID"/>
+        <property expression="get-property('IFSC')" name="IFSC"/>
+        <property expression="get-property('BRANCH')" name="BRANCH"/>
+    </log>
+    <dbreport>
+        <connection>
+            <pool>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/test</url>
+                <user>root</user>
+                <password>root</password>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[insert into test.wso2_users(FIRST_NAME,LAST_NAME,DOB,GENDER,PHONE_NO,MAIL_ID,PAN_NO,ADHAR_NO,ADDRESS) values(?,?,?,?,?,?,?,?,?)]]></sql>
+            <parameter expression="$ctx:FIRST_NAME" type="VARCHAR"/>
+            <parameter expression="$ctx:LAST_NAME" type="VARCHAR"/>
+            <parameter expression="$ctx:DOB" type="VARCHAR"/>
+            <parameter expression="$ctx:GENDER" type="VARCHAR"/>
+            <parameter expression="$ctx:PHONE_NO" type="VARCHAR"/>
+            <parameter expression="$ctx:MAIL_ID" type="VARCHAR"/>
+            <parameter expression="$ctx:PAN_NO" type="VARCHAR"/>
+            <parameter expression="$ctx:ADHAR_NO" type="VARCHAR"/>
+            <parameter expression="$ctx:ADDRESS" type="VARCHAR"/>
+        </statement>
+    </dbreport>
+    <log level="custom">
+        <property expression="fn:concat(get-property('FIRST_NAME'),' ',get-property('LAST_NAME'),' account created successfully')" name="Data_Inserted_Successfully"/>
+    </log>
+    <dblookup>
+        <connection>
+            <pool>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/test</url>
+                <user>root</user>
+                <password>root</password>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[SELECT USER_ID FROM WSO2_USERS WHERE PAN_NO=?]]></sql>
+            <parameter expression="$ctx:PAN_NO" type="VARCHAR"/>
+            <result column="USER_ID" name="DBUSER_ID"/>
+        </statement>
+    </dblookup>
+    <property expression="get-property('DBUSER_ID')" name="USER_ID" scope="default" type="STRING"/>
+    <dbreport>
+        <connection>
+            <pool>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/test</url>
+                <user>root</user>
+                <password>root</password>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[UPDATE wso2_account SET account_no=?,ifsc=?,PASSWORD=?,customer_id=?,branch=? WHERE user_id=?]]></sql>
+            <parameter expression="$ctx:ACCOUNT_NUMBER" type="VARCHAR"/>
+            <parameter expression="$ctx:IFSC" type="VARCHAR"/>
+            <parameter expression="$ctx:PASSWORD" type="VARCHAR"/>
+            <parameter expression="$ctx:CUSTOMER_ID" type="VARCHAR"/>
+            <parameter expression="$ctx:BRANCH" type="VARCHAR"/>
+            <parameter expression="$ctx:USER_ID" type="INTEGER"/>
+        </statement>
+    </dbreport>
+    <log level="custom">
+        <property name="Data_updated_account_table" value="Data updated successfully"/>
+    </log>
+</sequence>

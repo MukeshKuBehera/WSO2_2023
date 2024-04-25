@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="WSO2_Service" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <sequence key="AccountCreation"/>
+            <log level="custom">
+                <property name="AFTER ACCOUNT CREATION SEQUENCE" value="AFTER ACCOUNT CREATION SEQUENCE"/>
+            </log>
+            <sequence key="Email_Sequence"/>
+            <log level="custom">
+                <property name="AFTER SEND EMAIL SEQUENCE" value="AFTER SEND EMAIL SEQUENCE"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{&#xd;
+  "StatusCode": "200",&#xd;
+  "StatusMessage": "ok",&#xd;
+  "Result": {&#xd;
+    "Message": "Your Account Created Successfully",&#xd;
+    "Name": "$1",&#xd;
+    "AccountNo": "$2",&#xd;
+    "IFSC": "$3",&#xd;
+    "Branch": "$4",&#xd;
+    "CustomerID": "$5",&#xd;
+    "Password": "Your one time password send to your registered Email"&#xd;
+  }&#xd;
+}</format>
+                <args>
+                    <arg evaluator="json" expression="$ctx:FULL_NAME"/>
+                    <arg evaluator="json" expression="$ctx:ACCOUNT_NUMBER"/>
+                    <arg evaluator="json" expression="$ctx:IFSC"/>
+                    <arg evaluator="json" expression="$ctx:BRANCH"/>
+                    <arg evaluator="json" expression="$ctx:CUSTOMER_ID"/>
+                </args>
+            </payloadFactory>
+            <log level="custom">
+                <property name="Response To Client" value="Response To Client"/>
+            </log>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <log level="custom">
+                <property expression="get-property('ERROR_CODE')" name="ERROR CODE"/>
+                <property expression="get-property('ERROR_MESSAGE')" name="ERROR MESSAGE"/>
+            </log>
+        </faultSequence>
+    </target>
+</proxy>

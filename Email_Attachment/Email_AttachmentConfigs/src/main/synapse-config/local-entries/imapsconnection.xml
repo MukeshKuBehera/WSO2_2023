@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="imapsconnection" xmlns="http://ws.apache.org/ns/synapse">
+    <email.init>
+        <host>imap.gmail.com</host>
+        <port>993</port>
+        <name>imapsconnection</name>
+        <username>vamsi2634@gmail.com</username>
+        <password>xfpjkvwjwndxbyzp</password>
+        <connectionType>IMAPS</connectionType>
+        <maxActiveConnections>4</maxActiveConnections>
+    </email.init>
+</localEntry>

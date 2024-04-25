@@ -1,0 +1,10 @@
+---
+key: "XML_TO_JSON_proxy-1.0.0"
+name : "XML_TO_JSON"
+displayName : "XML_TO_JSON"
+description: "Sample Proxy Service"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/services/XML_TO_JSON"
+definitionType: "WSDL1"
+securityType: "BASIC"
+mutualSSLEnabled: false

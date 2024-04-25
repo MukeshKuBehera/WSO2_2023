@@ -1,0 +1,10 @@
+---
+key: "WSO2_Service_proxy-1.0.0"
+name : "WSO2_Service"
+displayName : "WSO2_Service"
+description: "Sample Proxy Service"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/services/WSO2_Service"
+definitionType: "WSDL1"
+securityType: "BASIC"
+mutualSSLEnabled: false

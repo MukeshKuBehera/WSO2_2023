@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
+  <server type="SEQUENCE">
+    <children xsi:type="esb:Sequences" name="CreateAccount">
+      <outputConnector>
+        <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
+      </outputConnector>
+      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.8/@outputConnector/@outgoingLink"/>
+      <mediatorFlow>
+        <children xsi:type="esb:ScriptMediator" scriptType="INLINE" scriptBody="var customerId =Math.floor(Math.random() * 10000000000).toString().slice(2,10);&#xA;    mc.setProperty(&quot;customer_id&quot;, customerId);&#xA; var password = Math.random().toString(36).slice(2);&#xA;    mc.setProperty(&quot;password&quot;, password);&#xA;    var accountNumber =Math.floor(Math.random() * 10000000000000000000000).toString().slice(2,16);&#xA;    mc.setProperty(&quot;account_no&quot;, accountNumber);">
+          <scriptDynamicKey prettyName="" propertyName="dynamic key" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <inputConnector incomingLinks="//@server/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@inputConnector"/>
+          </outputConnector>
+          <scriptStaticKey prettyName="Script Key" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        </children>
+        <children xsi:type="esb:PropertyGroupMediator">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.2/@inputConnector"/>
+          </outputConnector>
+          <properties valueType="EXPRESSION" newPropertyName="ACCOUNT_NUMBER">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression propertyValue="get-property('account_no')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties valueType="EXPRESSION" newPropertyName="PASSWORD">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression propertyValue="get-property('password')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties valueType="EXPRESSION" newPropertyName="CUSTOMER_ID">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression propertyValue="get-property('customer_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="HDFC09856" newPropertyName="IFSC">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="HYDERABAD" newPropertyName="BRANCH">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties valueType="EXPRESSION" newPropertyName="FULL_NAME">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression propertyValue="fn:concat(get-property('FIRST_NAME'),' ',get-property('LAST_NAME'))" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+        </children>
+        <children xsi:type="esb:LogMediator" logLevel="CUSTOM" logSeparator="@@@@@@@@@@@">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@inputConnector"/>
+          </outputConnector>
+          <properties propertyName="FULL_NAME" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('FULL_NAME')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+          <properties propertyName="ACCOUNT_NUMBER" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('ACCOUNT_NUMBER')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+          <properties propertyName="PASSWORD" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('PASSWORD')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+          <properties propertyName="CUSTOMER_ID" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('CUSTOMER_ID')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+          <properties propertyName="IFSC" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('IFSC')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+          <properties propertyName="BRANCH" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('BRANCH')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+        </children>
+        <children xsi:type="esb:DBReportMediator" connectionDbType="MYSQL" connectionDbDriver="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test" connectionUsername="root" connectionPassword="root">
+          <sqlStatements queryString="insert into test.wso2_users(FIRST_NAME,LAST_NAME,DOB,GENDER,PHONE_NO,MAIL_ID,PAN_NO,ADHAR_NO,ADDRESS) values(?,?,?,?,?,?,?,?,?)">
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:FIRST_NAME" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:LAST_NAME" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:DOB" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:GENDER" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:PHONE_NO" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:MAIL_ID" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:PAN_NO" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:ADHAR_NO" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:ADDRESS" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+          </sqlStatements>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.4/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:LogMediator" logLevel="CUSTOM" logSeparator=", ">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.5/@inputConnector"/>
+          </outputConnector>
+          <properties propertyName="Data_Inserted_Successfully" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="fn:concat(get-property('FIRST_NAME'),' ',get-property('LAST_NAME'),' account created successfully')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+        </children>
+        <children xsi:type="esb:DBLookupMediator" connectionDbType="MYSQL" connectionDbDriver="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test" connectionUsername="root" connectionPassword="root">
+          <sqlStatements queryString="SELECT USER_ID FROM WSO2_USERS WHERE PAN_NO=?">
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:PAN_NO" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <results propertyName="DBUSER_ID" columnId="USER_ID"/>
+          </sqlStatements>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.6/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="USER_ID">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.7/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="get-property('DBUSER_ID')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:DBReportMediator" connectionDbType="MYSQL" connectionDbDriver="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test" connectionUsername="root" connectionPassword="root">
+          <sqlStatements queryString="UPDATE wso2_account SET account_no=?,ifsc=?,PASSWORD=?,customer_id=?,branch=? WHERE user_id=?">
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:ACCOUNT_NUMBER" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:IFSC" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:PASSWORD" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:CUSTOMER_ID" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="VARCHAR" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:BRANCH" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+            <parameters dataType="INTEGER" valueLiteral="default">
+              <valueExpression propertyValue="$ctx:USER_ID" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </parameters>
+          </sqlStatements>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.6/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.8/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:LogMediator" logLevel="CUSTOM" logSeparator=", ">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.7/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@inputConnector"/>
+          </outputConnector>
+          <properties propertyName="Data_updated_account_table" propertyValue="Data updated successfully">
+            <propertyExpression prettyName="property expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+        </children>
+      </mediatorFlow>
+      <onError prettyName="OnError sequence Key" keyName="OnError sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+    </children>
+  </server>
+</esb:EsbDiagram>

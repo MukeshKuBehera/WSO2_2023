@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/api_test" name="Convert_Json_To_Soap_Using_XSLT" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST GET">
+        <inSequence>
+            <log level="full"/>
+            <xslt key="in_transform"/>
+            <header name="Action" scope="default" value="urn:getQuote"/>
+            <enrich>
+                <source clone="true" xmlns:m0="http://services.samples" xpath="//m0:getQuote"/>
+                <target type="body"/>
+            </enrich>
+            <call>
+                <endpoint>
+                    <address format="soap11" uri="https://jsonplaceholder.typicode.com/posts">
+                        <suspendOnFailure>
+                            <initialDuration>-1</initialDuration>
+                            <progressionFactor>1</progressionFactor>
+                        </suspendOnFailure>
+                        <markForSuspension>
+                            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                        </markForSuspension>
+                    </address>
+                </endpoint>
+            </call>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

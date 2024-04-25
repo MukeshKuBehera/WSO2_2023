@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="EmailService" groupId="wso2.sampleEmailService.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/EmailService.xml</file>
+    </artifact>
+    <artifact name="EmailService_swagger" groupId="wso2.sampleEmailService.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/EmailService_swagger.yaml</file>
+    </artifact>
+    <artifact name="EmailService_metadata" groupId="wso2.sampleEmailService.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/EmailService_metadata.yaml</file>
+    </artifact>
+    <artifact name="imapsconnection" groupId="wso2.sampleEmailService.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/imapsconnection.xml</file>
+    </artifact>
+    <artifact name="smtpsconnection" groupId="wso2.sampleEmailService.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/smtpsconnection.xml</file>
+    </artifact>
+</artifacts>

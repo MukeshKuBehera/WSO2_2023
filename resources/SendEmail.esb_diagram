@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmi:id="_MEKQAAtNEe6HSdzkgAypQA" type="Esb" name="SendEmail" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_MEoxIgtNEe6HSdzkgAypQA" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_MEoxJwtNEe6HSdzkgAypQA" type="7001">
+      <children xmi:type="notation:Node" xmi:id="_MJNvIAtNEe6HSdzkgAypQA" type="3614">
+        <styles xmi:type="notation:DescriptionStyle" xmi:id="_MJNvIQtNEe6HSdzkgAypQA"/>
+        <styles xmi:type="notation:FontStyle" xmi:id="_MJNvIgtNEe6HSdzkgAypQA" fontName="Segoe UI"/>
+        <styles xmi:type="notation:LineStyle" xmi:id="_MJNvIwtNEe6HSdzkgAypQA"/>
+        <element xmi:type="esb:Sequences" href="SendEmail.esb#//@server/@children.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MJNvJAtNEe6HSdzkgAypQA" width="195" height="125"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_MEoxIwtNEe6HSdzkgAypQA"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_MEoxJAtNEe6HSdzkgAypQA" fontName="Segoe UI"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_MEoxJQtNEe6HSdzkgAypQA"/>
+    <element xmi:type="esb:EsbServer" href="SendEmail.esb#//@server"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MEoxJgtNEe6HSdzkgAypQA"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_MEKQAQtNEe6HSdzkgAypQA"/>
+  <element xmi:type="esb:EsbDiagram" href="SendEmail.esb#/"/>
+</notation:Diagram>

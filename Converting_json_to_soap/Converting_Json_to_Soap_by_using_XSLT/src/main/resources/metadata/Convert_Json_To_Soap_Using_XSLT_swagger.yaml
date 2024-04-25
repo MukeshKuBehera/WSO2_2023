@@ -1,0 +1,17 @@
+openapi: 3.0.1
+info:
+  title: Convert_Json_To_Soap_Using_XSLT
+  description: API Definition of Convert_Json_To_Soap_Using_XSLT
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/api_test
+paths:
+  /:
+    get:
+      responses:
+        default:
+          description: Default response
+    post:
+      responses:
+        default:
+          description: Default response

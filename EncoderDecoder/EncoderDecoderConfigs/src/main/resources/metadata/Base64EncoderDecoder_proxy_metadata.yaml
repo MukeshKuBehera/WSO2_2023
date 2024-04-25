@@ -1,0 +1,10 @@
+---
+key: "Base64EncoderDecoder_proxy-1.0.0"
+name : "Base64EncoderDecoder"
+displayName : "Base64EncoderDecoder"
+description: "Sample Proxy Service"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/services/Base64EncoderDecoder"
+definitionType: "WSDL1"
+securityType: "BASIC"
+mutualSSLEnabled: false

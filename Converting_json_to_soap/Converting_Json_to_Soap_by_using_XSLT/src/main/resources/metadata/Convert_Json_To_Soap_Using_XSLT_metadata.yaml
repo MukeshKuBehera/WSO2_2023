@@ -1,0 +1,11 @@
+---
+key: "Convert_Json_To_Soap_Using_XSLT-1.0.0"
+name : "Convert_Json_To_Soap_Using_XSLT"
+displayName : "Convert_Json_To_Soap_Using_XSLT"
+description: "Sample API"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/api_test"
+definitionType: "OAS3"
+securityType: "BASIC"
+mutualSSLEnabled: false
+apiId : "null"

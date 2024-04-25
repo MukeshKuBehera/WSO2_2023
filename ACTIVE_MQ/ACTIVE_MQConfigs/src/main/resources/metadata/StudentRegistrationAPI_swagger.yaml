@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: StudentRegistrationAPI
+  description: API Definition of StudentRegistrationAPI
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/registerstudent
+paths:
+  /:
+    post:
+      responses:
+        default:
+          description: Default response

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="JSON_TO_XML" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property expression="json-eval($)" name="Request_Payload"/>
+            </log>
+            <property expression="json-eval($)" name="Request_Message" scope="default" type="STRING"/>
+            <class name="com.test.Json_to_xml"/>
+            <property expression="get-property('XML_Msg')" name="Xml_Messages" scope="default" type="STRING"/>
+            <log level="custom">
+                <property expression="get-property('XML_Msg')" name="Response_From_Class_Mediator"/>
+                <property expression="get-property('Xml_Messages')" name="Response_From_Property_Mediator"/>
+            </log>
+            <payloadFactory media-type="xml">
+                <format>
+                    <Result xmlns="">$1</Result>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('Xml_Messages')"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+</proxy>

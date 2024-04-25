@@ -1,0 +1,59 @@
+<data name="StudentDataService">
+  <description>Exposing the data service as a SOAP service.</description>
+  <operation name="CreateStudents">
+    <call-query href="CreateStudents">
+      <with-param name="name" query-param="name" />
+      <with-param name="school" query-param="school" />
+      <with-param name="grade" query-param="grade" />
+    </call-query>
+  </operation>
+  <operation name="UpdateStudents">
+    <call-query href="UpdateStudents">
+      <with-param name="name" query-param="name" />
+      <with-param name="school" query-param="school" />
+      <with-param name="grade" query-param="grade" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="ReadStudents">
+    <call-query href="ReadStudents" />
+  </operation>
+  <operation name="DeleteStudents">
+    <call-query href="DeleteStudent">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <config id="StudentsDatasource">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://localhost:3306/test</property>
+    <property name="username">root</property>
+    <property name="password">root</property>
+    <property name="dynamicUserAuthClass">com.mysql.jdbc.Driver</property>
+  </config>
+  <query id="CreateStudents" useConfig="StudentsDatasource">
+    <sql>INSERT INTO students (name, school, grade) VALUES (:name, :school, :grade)</sql>
+    <param name="name" sqlType="STRING" paramType="SCALAR" />
+    <param name="school" sqlType="STRING" paramType="SCALAR" />
+    <param name="grade" sqlType="INTEGER" paramType="SCALAR" />
+  </query>
+  <query id="UpdateStudents" useConfig="StudentsDatasource">
+    <sql>UPDATE students SET name = :name, school = :school, grade = :grade WHERE id = :id</sql>
+    <param name="name" sqlType="STRING" paramType="SCALAR" />
+    <param name="school" sqlType="STRING" paramType="SCALAR" />
+    <param name="grade" sqlType="INTEGER" paramType="SCALAR" />
+    <param name="id" sqlType="INTEGER" paramType="SCALAR" />
+  </query>
+  <query id="ReadStudents" useConfig="StudentsDatasource">
+    <sql>SELECT id, name, school, grade FROM students</sql>
+    <result rowName="Student" element="Students">
+      <element name="Id" xsdType="integer" column="id" />
+      <element name="Name" xsdType="string" column="name" />
+      <element name="School" xsdType="string" column="school" />
+      <element name="Grade" xsdType="integer" column="grade" />
+    </result>
+  </query>
+  <query id="DeleteStudent" useConfig="StudentsDatasource">
+    <sql>DELETE FROM students WHERE id = :id</sql>
+    <param name="id" sqlType="INTEGER" paramType="SCALAR" />
+  </query>
+</data>
